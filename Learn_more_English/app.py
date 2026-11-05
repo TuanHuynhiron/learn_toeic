@@ -10,9 +10,9 @@ from flask import Flask, render_template_string, request, jsonify
 
 app = Flask(__name__)
 
-# File lưu trữ dữ liệu
-FILE_PATH = "D:/Learn_more_English/vocab.json" if os.path.exists("D:/Learn_more_English/") else "vocab.json"
-NOTES_PATH = "D:/Learn_more_English/grammar_notes.txt" if os.path.exists("D:/Learn_more_English/") else "grammar_notes.txt"
+# Sửa 2 dòng khai báo FILE_PATH và NOTES_PATH thành:
+FILE_PATH = os.path.join(os.getcwd(), "vocab.json")
+NOTES_PATH = os.path.join(os.getcwd(), "grammar_notes.txt")
 
 if not os.path.exists(FILE_PATH):
     with open(FILE_PATH, "w", encoding="utf-8") as f:
@@ -799,8 +799,5 @@ def index():
     ''')
 
 if __name__ == '__main__':
-    print("====================================================")
-    print(" App Học Từ Vựng & Ngữ Pháp Tiếng Anh đang chạy!")
-    print(" Mở trình duyệt truy cập: http://localhost:5000")
-    print("====================================================")
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
